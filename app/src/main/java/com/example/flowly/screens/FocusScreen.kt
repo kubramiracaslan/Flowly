@@ -134,8 +134,8 @@ fun EvolutionGraphic(progress: Float, duration: Int) {
             strokeCap = StrokeCap.Round
         )
 
-        // Text kısmını Crossfade ile sarmaladım
-        // buradaki 'text' değişkeninin boş gelmediğinden emin ol
+        /* Text kısmını Crossfade ile sarmaladım
+          buradaki 'text' değişkeninin boş gelmediğinden emin ol */
         Crossfade(targetState = stage, label = "stageAnimation") { currentStage ->
             Text(
                 text = currentStage,
