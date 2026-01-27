@@ -1,5 +1,6 @@
 package com.example.flowly.screens
 
+import java.util.Locale
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -62,7 +63,7 @@ fun FocusScreen(
         val minutes = timeLeft / 60
         val seconds = timeLeft % 60
         Text(
-            text = String.format("%02d:%02d", minutes, seconds),
+            text = String.format(Locale.ENGLISH, "%02d:%02d", minutes, seconds),
             style = MaterialTheme.typography.displayLarge,
             fontWeight = FontWeight.Bold,
             color = CoffeeDark
