@@ -14,6 +14,10 @@ import androidx.compose.ui.unit.sp
 import com.example.flowly.model.FocusConfig
 import com.example.flowly.ui.theme.CoffeeDark
 import kotlinx.coroutines.delay
+import androidx.compose.animation.core.animateFloatAsState
+import com.example.flowly.ui.theme.CoffeeLight
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.animation.core.tween
 
 @Composable
 fun FocusScreen(
@@ -87,18 +91,58 @@ fun FocusScreen(
 
 @Composable
 fun EvolutionGraphic(progress: Float, duration: Int) {
-    // Progress'e göre hangi aşamada olduğumuzu belirliyoruz
+    // Debug için progress değerini console'a yazdırabilirsin:
+    // println("Gelen Progress: $progress")
+
     val stage = when {
         progress < 0.25f -> "🌱 Coffee Bean"
-        progress < 0.55f -> " Grinding..."
+        progress < 0.55f -> "⚙️ Grinding..."
         progress < 0.85f -> "☕ Brewing..."
-        else -> if (duration <= 10) "☕ Espresso" else if (duration <= 25) "☕ Americano" else "☕ Latte"
+        else -> {
+            // Süre tamamlanmaya yakınken veya tamamlandığında görünecek kahve ismi
+            when {
+                duration < 25 -> "☕ Espresso"
+                duration < 60 -> "☕ Americano"
+                duration < 90 -> "🥛 Latte"
+                duration < 120 -> "🍮 Caramel Macchiato"
+                else -> "🍨 Frappuccino"
+            }
+        }
     }
 
-    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(200.dp)) {
-        // Crossfade aşamalar arası yumuşak geçiş sağlar
-        Crossfade(targetState = stage, label = "") { text ->
-            Text(text = text, fontSize = 24.sp, fontWeight = FontWeight.Medium)
+    // Animasyonlu progress
+    val animatedProgress by animateFloatAsState(
+        targetValue = progress,
+        animationSpec = tween(durationMillis = 500),
+        label = "progress"
+    )
+
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(250.dp)) {
+        CircularProgressIndicator(
+            progress = { 1f },
+            modifier = Modifier.fillMaxSize(),
+            color = CoffeeLight.copy(alpha = 0.3f),
+            strokeWidth = 8.dp,
+            strokeCap = StrokeCap.Round
+        )
+
+        CircularProgressIndicator(
+            progress = { animatedProgress },
+            modifier = Modifier.fillMaxSize(),
+            color = CoffeeDark,
+            strokeWidth = 12.dp,
+            strokeCap = StrokeCap.Round
+        )
+
+        // Text kısmını Crossfade ile sarmaladım
+        // buradaki 'text' değişkeninin boş gelmediğinden emin ol
+        Crossfade(targetState = stage, label = "stageAnimation") { currentStage ->
+            Text(
+                text = currentStage,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = CoffeeDark
+            )
         }
     }
 }
