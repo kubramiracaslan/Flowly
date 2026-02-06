@@ -9,8 +9,19 @@ enum class ActivityType(val label: String) {
     CLEANING("Cleaning")
 }
 
+enum class ThemeType(val label: String) {
+    COFFEE("Coffee Shop"),
+    BAKERY("Sweet Bakery")
+}
 //data class = veri taşımak için
 data class FocusConfig(
     val durationMinutes: Int,
-    val activity: ActivityType
+    val activity: ActivityType,
+    val theme: ThemeType
+)
+data class CollectedItem(
+    val name: String,
+    val icon: String, // Ekranda emoji veya basit ikon göstermek için
+    val theme: ThemeType,
+    val duration: Int
 )
