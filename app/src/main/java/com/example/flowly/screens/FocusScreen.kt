@@ -159,20 +159,25 @@ fun EvolutionGraphic(progress: Float, config: FocusConfig) {
 }
 
 fun getProducedItem(config: FocusConfig): CollectedItem {
+    // 1. Tarihi oluşturuyoruz
+    val formatter = java.text.SimpleDateFormat("d MMM yyyy", Locale.ENGLISH)
+    val currentDate = formatter.format(Date())
+
+    // 2. Objeleri oluştururken en sona currentDate ekliyoruz
     return when (config.theme) {
         ThemeType.COFFEE -> when {
-            config.durationMinutes < 25 -> CollectedItem("Espresso", "☕", config.theme, config.durationMinutes)
-            config.durationMinutes < 60 -> CollectedItem("Americano", "☕", config.theme, config.durationMinutes)
-            config.durationMinutes < 90 -> CollectedItem("Latte", "🥛", config.theme, config.durationMinutes)
-            config.durationMinutes < 120 -> CollectedItem("Caramel Macchiato", "🍮", config.theme, config.durationMinutes)
-            else -> CollectedItem("Legendary Coffee Feast", "☕🍮🥛✨", config.theme, config.durationMinutes)
+            config.durationMinutes < 25 -> CollectedItem("Espresso", R.drawable.espresso, config.theme, config.durationMinutes, currentDate)
+            config.durationMinutes < 60 -> CollectedItem("Americano", R.drawable.americano, config.theme, config.durationMinutes, currentDate)
+            config.durationMinutes < 90 -> CollectedItem("Latte", R.drawable.latte, config.theme, config.durationMinutes, currentDate)
+            config.durationMinutes < 120 -> CollectedItem("Caramel Macchiato", R.drawable.caramel_macchiato, config.theme, config.durationMinutes, currentDate)
+            else -> CollectedItem("Legendary Coffee Feast", R.drawable.legendary_coffee_feast, config.theme, config.durationMinutes, currentDate)
         }
         ThemeType.BAKERY -> when {
-            config.durationMinutes < 25 -> CollectedItem("Cookie", "🍪", config.theme, config.durationMinutes)
-            config.durationMinutes < 60 -> CollectedItem("Croissant", "🥐", config.theme, config.durationMinutes)
-            config.durationMinutes < 90 -> CollectedItem("Piece of Cake", "🍰", config.theme, config.durationMinutes)
-            config.durationMinutes < 120 -> CollectedItem("Whole Cake", "🎂", config.theme, config.durationMinutes)
-            else -> CollectedItem("Legendary Bakery Feast", "🎂🍰🥯🥨🧁✨", config.theme, config.durationMinutes)
+            config.durationMinutes < 25 -> CollectedItem("Cookie", R.drawable.cookie, config.theme, config.durationMinutes, currentDate)
+            config.durationMinutes < 60 -> CollectedItem("Croissant", R.drawable.croissant, config.theme, config.durationMinutes, currentDate)
+            config.durationMinutes < 90 -> CollectedItem("Piece of Cake", R.drawable.piece_of_cake, config.theme, config.durationMinutes, currentDate)
+            config.durationMinutes < 120 -> CollectedItem("Whole Cake", R.drawable.cake, config.theme, config.durationMinutes, currentDate)
+            else -> CollectedItem("Legendary Bakery Feast", R.drawable.legendary_cake_tower, config.theme, config.durationMinutes, currentDate)
         }
     }
 }

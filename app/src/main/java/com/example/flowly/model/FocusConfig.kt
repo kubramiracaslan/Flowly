@@ -21,7 +21,8 @@ data class FocusConfig(
 )
 data class CollectedItem(
     val name: String,
-    val icon: String, // Ekranda emoji veya basit ikon göstermek için
+    val icon: Int, // Ekranda emoji veya basit ikon göstermek için
     val theme: ThemeType,
-    val duration: Int
+    val duration: Int,
+    val date: String // Yeni eklenen alan
 )
